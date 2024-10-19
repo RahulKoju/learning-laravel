@@ -6,6 +6,11 @@
     <title>About page</title>
 </head>
 <body>
-    <h1>This is about page</h1>
+    <x-nav-link href="/">Home</x-nav-link>
+    <x-nav-link href="/about">About</x-nav-link>
+    <x-nav-link href="/contact">Contact</x-nav-link>
+
+    <!-- {{ $slot }} -->
+    <?php echo $slot ?>
 </body>
 </html>
