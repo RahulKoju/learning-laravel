@@ -1,88 +1,37 @@
 <?php
 
+use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
-use App\Models\Job;
 
-Route::get('/', function () {
-    return view('home');
-});
+// Route::get('/', function () {
+//     return view('home');
+// });
+Route::view('/', 'home'); //3.route::view
 
-//index or all jobs
-Route::get("/jobs", function () {
-    //eager loading with employer rln as part of one single query
-    //to solve N+1 problem or remove lazy loading
-    //$jobs = Job::with('employer')->get();
-    $jobs = Job::with('employer')->latest()->simplePaginate(3);
-    //$jobs = Job::with('employer')->paginate(3);
-    //$jobs = Job::with('employer')->cursorPaginate(3);
+// Route::get("/contact", function () {
+//     return view("contact");
+// });
+Route::view('/contact', 'contact');
 
-    return view("jobs.index", [
-        'jobs' => $jobs
-    ]);
-});
 
-//create
-Route::get('/jobs/create', function () {
-    return view('jobs.create');
-});
+// Route::get("/jobs", [JobController::class, 'index']);
+// Route::get('/jobs/create', [JobController::class, 'create']);
+// Route::post('/jobs', [JobController::class, 'store']);
+// Route::get("/jobs/{job}", [JobController::class, 'show']);
+// Route::patch("/jobs/{job}", [JobController::class, 'update']);
+// Route::delete("/jobs/{job}", [JobController::class, 'delete']);
+// Route::get("/jobs/{job}/edit", [JobController::class, 'edit']);
 
-//store
-Route::post('/jobs', function () {
-    //validation
-    request()->validate([
-        'title' => ['required', 'min:3'],
-        'salary' => ['required']
-    ]);
+//4. route lists- php artisan route:list --except-vendor
 
-    Job::create([
-        'title' => request('title'),
-        'salary' => request('salary'),
-        'employer_id' => 1,
-    ]);
+// Route::controller(JobController::class)->group(function () {  //5.route groups
+//     Route::get("/jobs", 'index');
+//     Route::get('/jobs/create', 'create');
+//     Route::post('/jobs', 'store');
+//     Route::get("/jobs/{job}", 'show');
+//     Route::patch("/jobs/{job}", 'update');
+//     Route::delete("/jobs/{job}", 'delete');
+//     Route::get("/jobs/{job}/edit", 'edit');
+// });
 
-    return redirect('/jobs');
-});
-
-Route::get("/contact", function () {
-    return view("contact");
-});
-
-//show
-Route::get("/jobs/{id}", function ($id) {
-    $job = Job::find($id);
-    return view("jobs.show", ['job' => $job]);
-});
-
-//update
-Route::patch("/jobs/{id}", function ($id) {
-    //validate
-    request()->validate([
-        'title' => ['required', 'min:3'],
-        'salary' => ['required']
-    ]);
-    //authorize
-    //update job
-    $job = Job::findOrFail($id);
-
-    $job->update([
-        'title' => request('title'),
-        'salary' => request('salary')
-    ]);
-    //redirect to the job page
-    return redirect('/jobs/' . $job->id);
-});
-
-//delete
-Route::delete("/jobs/{id}", function ($id) {
-    //authorize
-    //delete
-    $job = Job::findOrFail($id);
-    $job->delete();
-    return redirect('/jobs');
-});
-
-//edit
-Route::get("/jobs/{id}/edit", function ($id) {
-    $job = Job::find($id);
-    return view("jobs.edit", ['job' => $job]);
-});
+Route::resource('jobs', JobController::class); //6.route resource
