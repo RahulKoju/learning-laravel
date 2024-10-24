@@ -34,7 +34,7 @@
                     <x-form-feild>
                         <x-form-label for="password_confirmation">Confirm password</x-form-label>
                         <div class="mt-2">
-                            <x-form-input required type="password_confirmation" name="password_confirmation" id="password_confirmation" />
+                            <x-form-input required type="password" name="password_confirmation" id="password_confirmation" />
                             <x-form-error name="password_confirmation" />
                         </div>
                     </x-form-feild>

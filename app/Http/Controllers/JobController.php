@@ -69,7 +69,7 @@ class JobController extends Controller //2.controller classes
         return view("jobs.edit", ['job' => $job]);
     }
 
-    public function delete(Job $job)
+    public function destroy(Job $job)
     {
         //authorize
         //delete

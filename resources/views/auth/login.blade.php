@@ -10,7 +10,7 @@
                     <x-form-feild>
                         <x-form-label for="email">Email</x-form-label>
                         <div class="mt-2">
-                            <x-form-input required name="email" id="email" placeholder="example@gmail.com" />
+                            <x-form-input required name="email" id="email" :value="old('email')" placeholder="example@gmail.com" />
                             <x-form-error name="email" />
                         </div>
                     </x-form-feild>
