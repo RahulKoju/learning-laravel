@@ -14,6 +14,9 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors:{
+                "brand":"rgb(500,138,241)"
+            }
         },
     },
     plugins: [],
